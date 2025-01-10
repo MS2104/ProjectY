@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4404385256191506238}
   - component: {fileID: 7405558282393093096}
   - component: {fileID: 4650196671969551572}
-  - component: {fileID: 639358469485315731}
+  - component: {fileID: 8270230547967791680}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -107,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &639358469485315731
+--- !u!114 &8270230547967791680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,6 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48dcb68833f0cf8489980098addc7013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    name: Stick
-    count: 1
+  item: {fileID: 11400000, guid: 744dfdffd95532b48a926363fa087c0b, type: 2}
+  weightDisplay: {fileID: 0}

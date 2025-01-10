@@ -6,9 +6,12 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
+    public delegate void OnItemChanged();
+    public OnItemChanged onItemChangedCallback;
+
     public static Inventory instance;
     public List<Item> items = new List<Item>();
-    int currentWeight;
+    public int currentWeight;
     public int maxWeight = 100; // Set a default max weight
     public TMP_Text weightDisplay;
 
@@ -31,7 +34,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item itemToAdd)
     {
-        if (currentWeight + itemToAdd.weight > maxWeight)
+        if (currentWeight + itemToAdd.itemWeight > maxWeight)
         {
             Debug.Log("Inventory is too full to add this item!");
             return;
@@ -41,7 +44,7 @@ public class Inventory : MonoBehaviour
         {
             if (item.name == itemToAdd.name)
             {
-                item.count += itemToAdd.count;
+                item.itemCount += itemToAdd.itemCount;
                 itemExists = true;
                 break;
             }
@@ -51,9 +54,13 @@ public class Inventory : MonoBehaviour
             items.Add(itemToAdd);
         }
 
-        UpdateWeight(itemToAdd.weight);
+        UpdateWeight(itemToAdd.itemWeight);
         inventoryDisplay.UpdateInventory();
-        Debug.Log($"{itemToAdd.count} {itemToAdd.name} added to inventory.");
+        Debug.Log($"{itemToAdd.itemCount} {itemToAdd.name} added to inventory.");
+
+        // Trigger the callback
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
     }
 
     public void RemoveItem(Item itemToRemove)
@@ -61,14 +68,18 @@ public class Inventory : MonoBehaviour
         Item itemToUpdate = items.Find(item => item.name == itemToRemove.name);
         if (itemToUpdate != null)
         {
-            itemToUpdate.count -= itemToRemove.count;
-            if (itemToUpdate.count <= 0)
+            itemToUpdate.itemCount -= itemToRemove.itemCount;
+            if (itemToUpdate.itemCount <= 0)
             {
                 items.Remove(itemToUpdate);
             }
-            UpdateWeight(-itemToRemove.weight);
+            UpdateWeight(-itemToRemove.itemWeight);
             inventoryDisplay.UpdateInventory();
-            Debug.Log($"{itemToRemove.count} {itemToRemove.name} removed from inventory.");
+            Debug.Log($"{itemToRemove.itemCount} {itemToRemove.name} removed from inventory.");
+
+            // Trigger the callback
+            if (onItemChangedCallback != null)
+                onItemChangedCallback.Invoke();
         }
         else
         {

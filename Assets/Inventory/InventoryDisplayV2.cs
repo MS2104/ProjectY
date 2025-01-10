@@ -22,7 +22,7 @@ public class InventoryDisplayV2 : MonoBehaviour
 
             if (slotImage != null)
             {
-                slotImage.sprite = inventory.items[i].preview;
+                slotImage.sprite = inventory.items[i].itemPreview;
             }
         }
     }

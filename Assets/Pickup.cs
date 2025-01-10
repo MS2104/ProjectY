@@ -14,14 +14,14 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Inventory.instance.Add(item);
+        Inventory.instance.AddItem(item);
         UpdateWeight(item.itemWeight);
         Destroy(gameObject);
     }
 
     void UpdateWeight(int weightVar)
     {
-        inventory.weight += weightVar;
-        weightDisplay.text = $"Weight: {inventory.weight} kgs";
+        inventory.currentWeight += weightVar;
+        weightDisplay.text = $"Weight: {inventory.currentWeight} kgs";
     }
 }
