@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6747571838022184044}
   - component: {fileID: 4070159475296515382}
-  - component: {fileID: 1505216469237488155}
   - component: {fileID: 482028590689780502}
+  - component: {fileID: 2425286112427061408}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -86,8 +86,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1505216469237488155
-CircleCollider2D:
+--- !u!114 &482028590689780502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834318576177569660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48dcb68833f0cf8489980098addc7013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 4c084c4568ca2d54e90208cf7afddc73, type: 2}
+  stackSize: 1
+  weightDisplay: {fileID: 0}
+--- !u!61 &2425286112427061408
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,20 +134,15 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &482028590689780502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6834318576177569660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48dcb68833f0cf8489980098addc7013, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 4c084c4568ca2d54e90208cf7afddc73, type: 2}
-  stackSize: 1
-  weightDisplay: {fileID: 0}
+  m_Size: {x: 5, y: 5}
+  m_EdgeRadius: 0

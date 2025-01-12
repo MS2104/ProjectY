@@ -1,39 +1,60 @@
 using UnityEngine;
 using UnityEngine.UI;
-
-/* Sits on all InventorySlots. */
+using TMPro;
+using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour
 {
+    public Button removeButton; // Reference to the remove button
 
-	public Image icon;          // Reference to the Icon image
-	public Button removeButton; // Reference to the remove button
+    [Header("Item info objects")]
+    public Image icon; // Reference to the Icon image
+    public Image rarityDisplay;
+    public TMP_Text stackSize; // Reference to the stack size text
 
-	Item item;  // Current item in the slot
+    public ShowItemInfo showItemInfo;
 
-	// Add item to the slot
-	public void AddItem(Item newItem)
-	{
-		item = newItem;
+    Transform infoPanel;
 
-		icon.sprite = item.itemPreview;
-		icon.enabled = true;
-		removeButton.interactable = true;
-	}
+    Item item;  // Current item in the slot
 
-	// Clear the slot
-	public void ClearSlot()
-	{
-		item = null;
+    // Add item to the slot
+    public void AddItem(Item newItem)
+    {
+        item = newItem;
 
-		icon.sprite = null;
-		icon.enabled = false;
-		removeButton.interactable = false;
-	}
+        icon.sprite = item.itemPreview;
+        stackSize.text = item.itemCount.ToString();
+        stackSize.gameObject.SetActive(true); // Enable the stack size text
 
-	// Called when the remove button is pressed
-	public void OnRemoveButton()
-	{
-		Inventory.instance.RemoveItem(item);
-	}
+        icon.enabled = true;
+        removeButton.interactable = true;
+    }
+
+    // Clear the slot
+    public void ClearSlot()
+    {
+        item = null;
+
+        icon.sprite = null;
+        icon.enabled = false;
+        stackSize.text = "0";
+        stackSize.gameObject.SetActive(false); // Disable the stack size text
+        removeButton.interactable = false;
+    }
+
+    // Called when the remove button is pressed
+    public void OnRemoveButtonClick()
+    {
+        Inventory.instance.RemoveItem(item.itemID);
+        ClearSlot();
+    }
+
+    public void OnInfoButtonClick()
+    {
+        if (item != null)
+        {
+            showItemInfo.DisplayItemInfo(item);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -8,13 +9,11 @@ public class Inventory : MonoBehaviour
 {
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
-
     public static Inventory instance;
     public List<Item> items = new List<Item>();
     public int currentWeight;
-    public int maxWeight = 100; // Set a default max weight
+    public int maxWeight = 100;
     public TMP_Text weightDisplay;
-
     public InventoryDisplay inventoryDisplay;
 
     private void Awake()
@@ -25,66 +24,70 @@ public class Inventory : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         instance = this;
-
         DontDestroyOnLoad(gameObject);
         Debug.Log("Inventory instance initialized.");
     }
 
+    private void OnDestroy()
+    {
+        // Clean up any remaining ScriptableObject instances
+        foreach (var item in items)
+        {
+            if (item != null)
+            {
+                Destroy(item);
+            }
+        }
+        items.Clear();
+    }
+
     public void AddItem(Item itemToAdd, int stackSize)
     {
-        if (currentWeight + itemToAdd.itemWeight > maxWeight)
+        if (currentWeight + itemToAdd.itemWeight * stackSize > maxWeight)
         {
             Debug.Log("Inventory is too full to add this item!");
             return;
         }
+
         bool itemExists = false;
         foreach (Item item in items)
         {
-            if (item.name == itemToAdd.name)
+            if (item.itemID == itemToAdd.itemID)
             {
                 item.itemCount += stackSize;
                 itemExists = true;
                 break;
             }
         }
+
         if (!itemExists)
         {
-            itemToAdd.itemCount = stackSize;
-            items.Add(itemToAdd);
+            // Create a new instance of the item to avoid reference issues
+            Item newItem = ScriptableObject.Instantiate(itemToAdd);
+            newItem.itemCount = stackSize;
+            items.Add(newItem);
         }
 
-        UpdateWeight(itemToAdd.itemWeight);
+        UpdateWeight(itemToAdd.itemWeight * stackSize);
         inventoryDisplay.UpdateInventory();
-        Debug.Log($"{itemToAdd.itemCount} {itemToAdd.name} added to inventory.");
+        Debug.Log($"{stackSize} {itemToAdd.name} added to inventory.");
 
-        // Trigger the callback
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
 
-    public void RemoveItem(Item itemToRemove)
+    public void RemoveItem(int itemID)
     {
-        Item itemToUpdate = items.Find(item => item.name == itemToRemove.name);
-        if (itemToUpdate != null)
+        // For loop that loops through the inventory, finds the item with the matching ID, sets it's count to 0, and removes it from the list
+        for (int i = 0; i < items.Count; i++)
         {
-            itemToUpdate.itemCount -= itemToRemove.itemCount;
-            if (itemToUpdate.itemCount <= 0)
+            if (items[i].itemID == itemID)
             {
-                items.Remove(itemToUpdate);
+                items[i].itemCount = 0;
+                items.RemoveAt(i);
+                break;
             }
-            UpdateWeight(-itemToRemove.itemWeight);
-            inventoryDisplay.UpdateInventory();
-            Debug.Log($"{itemToRemove.itemCount} {itemToRemove.name} removed from inventory.");
-
-            // Trigger the callback
-            if (onItemChangedCallback != null)
-                onItemChangedCallback.Invoke();
-        }
-        else
-        {
-            Debug.LogWarning($"Attempted to remove non-existent item: {itemToRemove.name}");
         }
     }
 

@@ -36,18 +36,21 @@ public class InventoryUI : MonoBehaviour
 	// This is called using a delegate on the Inventory.
 	void UpdateUI()
 	{
-		// Loop through all the slots
-		for (int i = 0; i < slots.Length; i++)
-		{
-			if (i < inventory.items.Count)  // If there is an item to add
-			{
-				slots[i].AddItem(inventory.items[i]);   // Add it
-			}
-			else
-			{
-				// Otherwise clear the slot
-				slots[i].ClearSlot();
-			}
-		}
-	}
+
+        // for loop through all the slots
+        for (int i = 0; i < slots.Length; i++)
+        {
+            // If there is an item to add
+            if (i < inventory.items.Count)
+            {
+                // slots[i].AddItem(inventory.items[i]);    // Add the item
+                // Call the AddItem method of the InventorySlot class and pass the item contained in the inventory.items list at index i
+                slots[i].AddItem(inventory.items[i]);
+            }
+            else
+            {
+                slots[i].ClearSlot();   // Clear the slot
+            }
+        }
+    }
 }
