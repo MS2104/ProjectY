@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("Inventory instance initialized.");
     }
 
-    public void AddItem(Item itemToAdd)
+    public void AddItem(Item itemToAdd, int stackSize)
     {
         if (currentWeight + itemToAdd.itemWeight > maxWeight)
         {
@@ -44,13 +44,14 @@ public class Inventory : MonoBehaviour
         {
             if (item.name == itemToAdd.name)
             {
-                item.itemCount += itemToAdd.itemCount;
+                item.itemCount += stackSize;
                 itemExists = true;
                 break;
             }
         }
         if (!itemExists)
         {
+            itemToAdd.itemCount = stackSize;
             items.Add(itemToAdd);
         }
 

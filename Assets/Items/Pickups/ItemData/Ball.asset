@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f22f80ef14d1c0b4dbff82554ddc2436, type: 3}
-  m_Name: Stick
+  m_Name: Ball
   m_EditorClassIdentifier: 
-  itemName: Stick
-  itemCount: 1
+  itemName: Ball
   itemWeight: 5
-  itemID: 1
-  itemPreview: {fileID: 21300000, guid: f7371b20db0a0844d94ade5685f5b761, type: 3}
+  itemID: 2
+  itemStackLimit: 1
+  itemCount: 0
+  itemPreview: {fileID: 21300000, guid: 96ede62b558e6af46a576ad75c68b635, type: 3}

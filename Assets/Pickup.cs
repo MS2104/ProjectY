@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class Pickup : MonoBehaviour
 {
     public Item item;
+    public int stackSize;
     Inventory inventory;
     public Text weightDisplay;
 
@@ -14,7 +15,7 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Inventory.instance.AddItem(item);
+        Inventory.instance.AddItem(item, stackSize);
         UpdateWeight(item.itemWeight);
         Destroy(gameObject);
     }
@@ -22,6 +23,6 @@ public class Pickup : MonoBehaviour
     void UpdateWeight(int weightVar)
     {
         inventory.currentWeight += weightVar;
-        weightDisplay.text = $"Weight: {inventory.currentWeight} kgs";
+        // weightDisplay.text = $"Weight: {inventory.currentWeight} kgs";
     }
 }
