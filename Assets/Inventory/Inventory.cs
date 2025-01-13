@@ -44,12 +44,6 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item itemToAdd, int stackSize)
     {
-        if (currentWeight + itemToAdd.itemWeight * stackSize > maxWeight)
-        {
-            Debug.Log("Inventory is too full to add this item!");
-            return;
-        }
-
         bool itemExists = false;
         foreach (Item item in items)
         {
@@ -68,8 +62,6 @@ public class Inventory : MonoBehaviour
             newItem.itemCount = stackSize;
             items.Add(newItem);
         }
-
-        UpdateWeight(itemToAdd.itemWeight * stackSize);
         inventoryDisplay.UpdateInventory();
         Debug.Log($"{stackSize} {itemToAdd.name} added to inventory.");
 

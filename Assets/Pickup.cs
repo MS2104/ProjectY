@@ -22,21 +22,11 @@ public class Pickup : MonoBehaviour
     {
         if (inventory != null)
         {
-            // Check if adding the item would exceed max weight
-            if (inventory.currentWeight + (item.itemWeight * stackSize) <= inventory.maxWeight)
-            {
-                inventory.AddItem(item, stackSize);
-                // Remove UpdateWeight call as it's now handled in inventory.AddItem
-                Destroy(gameObject);
-            }
-            else
-            {
-                Debug.Log("Cannot pick up item - inventory would exceed weight limit!");
-            }
+            inventory.AddItem(item, stackSize);
+            // Remove UpdateWeight call as it's now handled in inventory.AddItem
+            Destroy(gameObject);
         }
     }
-
-    // Remove UpdateWeight method as it's now handled in the Inventory class
 
     private void OnValidate()
     {

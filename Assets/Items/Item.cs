@@ -22,3 +22,8 @@ public class Item : ScriptableObject
     public enum ItemType { Material, Weapon, Consumable, Quest };
     public enum ItemRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic };
 }
+
+
+
+
+
